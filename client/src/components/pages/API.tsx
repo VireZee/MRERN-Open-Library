@@ -5,7 +5,7 @@ import GenerateGQL from '../graphql/api/Generate'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/Store'
 import { setOnline, setApiKey } from '../redux/APIAction'
-import Net from '../error/Internet'
+import Net from '../common/Internet'
 
 const API: React.FC = () => {
     const { loading, data, error } = useQuery(CheckGQL)

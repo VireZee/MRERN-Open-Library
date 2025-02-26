@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/Store'
 import { setOnline, setLoad, Books, setBooks, setCurrentPage, setTotalPages } from '../redux/CollectionAction'
 import Load from './Load'
-import Net from '../error/Internet'
-import NB from '../error/NoBooks'
+import Net from '../common/Internet'
+import NB from '../common/NoBooks'
 
 interface Props {
     search: string
