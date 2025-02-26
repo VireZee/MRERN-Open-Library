@@ -3,9 +3,13 @@
     "scripts": {
         "dev": "nodemon src/main.ts"
     },
-    "packageManager": "pnpm@10.5.0",
     "devDependencies": {
+        "@types/express": "^5.0.0",
         "nodemon": "^3.1.9",
         "typescript": "^5.7.3"
-    }
+    },
+    "dependencies": {
+        "express": "^4.21.2"
+    },
+    "packageManager": "pnpm@10.5.1"
 }
