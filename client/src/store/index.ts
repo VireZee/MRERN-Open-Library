@@ -1,12 +1,13 @@
-import { configureStore, Store } from '@reduxjs/toolkit'
-import AppAct from './slices/App'
-import NavAct from './slices/Navbar'
-import RegAct from './slices/Register'
-import LogAct from './slices/Login'
-import HomeAct from './slices/Home'
-import ColAct from './slices/Collection'
-import APIAct from './slices/API'
-import SetAct from './slices/Settings'
+import type { Store } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
+import AppAct from './slices/core/App'
+import NavAct from './slices/layouts/Navbar'
+import RegAct from './slices/auth/Register'
+import LogAct from './slices/auth/Login'
+import HomeAct from './slices/views/Home'
+import ColAct from './slices/views/Collection'
+import APIAct from './slices/views/API'
+import SetAct from './slices/auth/Settings'
 
 const ReduxStore: Store = configureStore({
     reducer: {
