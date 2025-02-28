@@ -1,12 +1,12 @@
 import { configureStore, Store } from '@reduxjs/toolkit'
-import AppAct from './actions/AppAction'
-import NavAct from './actions/NavbarAction'
-import RegAct from './actions/RegisterAction'
-import LogAct from './actions/LoginAction'
-import HomeAct from './actions/HomeAction'
-import ColAct from './actions/CollectionAction'
-import APIAct from './actions/APIAction'
-import SetAct from './actions/SettingsAction'
+import AppAct from './slices/App'
+import NavAct from './slices/Navbar'
+import RegAct from './slices/Register'
+import LogAct from './slices/Login'
+import HomeAct from './slices/Home'
+import ColAct from './slices/Collection'
+import APIAct from './slices/API'
+import SetAct from './slices/Settings'
 
 const ReduxStore: Store = configureStore({
     reducer: {
