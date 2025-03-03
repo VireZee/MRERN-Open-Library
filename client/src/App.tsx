@@ -8,11 +8,11 @@ import AuthGQL from './graphql/queries/auth/Auth'
 import './styles/App.css'
 import Nav from './components/layouts/Navbar'
 import Home from './components/views/Home'
-import Reg from './components/auth/Register'
-import Log from './components/auth/Login'
-import Col from './components/views/Collection'
-import API from './components/views/API'
-import Set from './components/auth/Settings'
+// import Reg from './components/auth/Register'
+// import Log from './components/auth/Login'
+// import Col from './components/views/Collection'
+// import API from './components/views/API'
+// import Set from './components/auth/Settings'
 import NF from './components/common/NotFound'
 
 const App: React.FC = () => {
@@ -42,13 +42,8 @@ const App: React.FC = () => {
             <main>
                 <Routes>
                     <Route path='' element={<Home isUser={appState.user} search={appState.search} />} />
-                    <Route path='s' element={<Home isUser={appState.user} search={appState.search} />} />
-                    <Route path='register' element={!appState.user ? <Reg /> : <Navigate to='/' />} />
-                    <Route path='login' element={!appState.user ? <Log /> : <Navigate to='/' />} />
-                    <Route path='collection' element={appState.loadUser ? null : appState.user ? <Col search={appState.search} /> : <Navigate to='/login' />} />
-                    <Route path='collection?' element={appState.loadUser ? null : appState.user ? <Col search={appState.search} /> : <Navigate to='/login' />} />
-                    <Route path='API' element={appState.loadUser ? null : appState.user ? <API /> : <Navigate to='/login' />} />
-                    <Route path='settings' element={appState.loadUser ? null : appState.user ? <Set isUser={appState.user} /> : <Navigate to='/login' />} />
+                    <Route path=':query' element={<Home isUser={appState.user} search={appState.search} />} />
+                    <Route path=':query/:page' element={<Home isUser={appState.user} search={appState.search} />} />
                     <Route path='*' element={<NF />} />
                 </Routes>
             </main>

@@ -5,7 +5,7 @@ import Store from './store/index.ts'
 import App from './App.tsx'
 
 const Client = new ApolloClient({
-    // uri: `http://${import.meta.env.VITE_DOMAIN}:${import.meta.env.VITE_SERVER_PORT}/gql`,
+    uri: `http://${import.meta.env.VITE_DOMAIN}:${import.meta.env.VITE_SERVER_PORT}/gql`,
     credentials: 'include',
     headers: {
         'Content-Type': 'application/json',

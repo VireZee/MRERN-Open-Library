@@ -1,5 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
+interface UserData {
+    photo: string
+    name: string
+    uname: string
+    email: string
+}
 interface State {
     [key: string]: string | undefined | null | UserData | Boolean
 }
@@ -7,12 +14,6 @@ const initialState: State = {
     search: '',
     user: undefined,
     loadUser: true
-}
-interface UserData {
-    photo: string
-    name: string
-    uname: string
-    email: string
 }
 const AppAction = createSlice({
     name: 'APP',
