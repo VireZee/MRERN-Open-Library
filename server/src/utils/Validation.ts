@@ -1,6 +1,5 @@
-import { Not } from 'typeorm'
-import AppDataSource from '../DataSource'
-import User from '../models/User'
+import { Types } from 'mongoose'
+import User from '../models/User.ts'
 import argon2 from 'argon2'
 import jwt from 'jsonwebtoken'
 
@@ -88,5 +87,5 @@ export const Hash = async (pass: string) => {
     return await argon2.hash(pass + process.env.PEPPER, opt)
 }
 export const verHash = async (pass: string, hashedPass: string) => await argon2.verify(hashedPass, pass + process.env.PEPPER)
-export const genToken = (user_id: number) => jwt.sign({ user_id }, process.env.SECRET_KEY!, { algorithm: 'HS512', expiresIn: '30d' })
+export const genToken = (user_id: Types.ObjectId) => jwt.sign({ user_id }, process.env.SECRET_KEY!, { algorithm: 'HS512', expiresIn: '30d' })
 export const verToken = (t: string) => jwt.verify(t, process.env.SECRET_KEY!) as jwt.JwtPayload
