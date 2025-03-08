@@ -1,12 +1,11 @@
-import AppDataSource from '../../../DataSource'
-import Book from '../../../models/Collection'
+import { Types } from 'mongoose'
+import Book from '../../../models/Collection.ts'
 import { GraphQLError } from 'graphql'
 
-const Books = async (parent: { user_id: number }) => {
+const Books = async (parent: { id: Types.ObjectId }) => {
     try {
-        const bookRepo = AppDataSource.getRepository(Book)
-        const { user_id } = parent
-        const books = await bookRepo.find({ where: { user_id } })
+        const { id } = parent
+        const books = await Book.findById(id)
         return books.map(book => ({
             author_key: book.author_key,
             cover_edition_key: book.cover_edition_key,

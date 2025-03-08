@@ -1,16 +1,14 @@
-import { Request, Response } from 'express'
-import AppDataSource from '../../DataSource'
-import User from '../../models/User'
-import Books  from '../../graphql/resolver/api/Books'
+import { User } from '../models/User.ts'
+import type { Request, Response } from 'express'
+import Books from '../graphql/resolvers/api/Books.ts'
 
 const API = async (req: Request, res: Response) => {
     try {
-        const userRepo = AppDataSource.getRepository(User)
         const { hash } = req.params
-        const hashBuffer = Buffer.from(hash, 'hex')
-        const user = await userRepo.findOne({ where: { api_key: hashBuffer } })
+        const hashBuffer = Buffer.from(hash!, 'hex')
+        const user = await User.findOne({ api_key: hashBuffer })
         if (!user) return res.status(404).json({ message: 'Invalid API Key!' })
-        const books = await Books({ user_id: user!.user_id })
+        const books = await Books({ id: user!._id })
         const response = {
             email: user!.email,
             username: user!.username,

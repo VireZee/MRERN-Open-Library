@@ -1,11 +1,11 @@
-import User from '../../../models/User.ts'
+import { User } from '../../../models/User.ts'
 import type { Response } from 'express'
 import { verHash, genToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
 const Login = async (_: null, args: { emailOrUname: string, pass: string }, context: { res: Response }) => {
     try {
-        const { emailOrUname, pass} = args
+        const { emailOrUname, pass } = args
         const user = await User.findOne({
             $or: [
                 { email: emailOrUname.toLowerCase() },

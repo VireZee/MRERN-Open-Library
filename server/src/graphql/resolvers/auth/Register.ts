@@ -1,4 +1,4 @@
-import User from '../../../models/User.ts'
+import { User } from '../../../models/User.ts'
 import type { Response } from 'express'
 import { genSvg, valName, frmtName, valUname, frmtUname, valEmail, Hash, genToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'

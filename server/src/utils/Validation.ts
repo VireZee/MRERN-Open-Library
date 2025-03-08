@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import User from '../models/User.ts'
+import { User } from '../models/User.ts'
 import argon2 from 'argon2'
 import jwt from 'jsonwebtoken'
 

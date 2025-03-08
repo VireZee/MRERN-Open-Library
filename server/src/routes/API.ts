@@ -1,5 +1,5 @@
 import express from 'express'
-import APICon from '../controllers/api/API'
+import APICon from '../controllers/API.ts'
 
 const Router = express.Router({
     caseSensitive: true,
