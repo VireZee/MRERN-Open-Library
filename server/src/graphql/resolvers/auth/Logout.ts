@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import type { Response } from 'express'
 import { GraphQLError } from 'graphql'
 
 const Logout = (_: null, __: {}, context: { res: Response }) => {
@@ -7,7 +7,7 @@ const Logout = (_: null, __: {}, context: { res: Response }) => {
         return true
     } catch (e) {
         if (e instanceof GraphQLError) throw e
-        else throw new GraphQLError('Internal Server Error', { extensions: { code: '500' } })
+        else throw e
     }
 }
 export default Logout

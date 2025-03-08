@@ -3,7 +3,6 @@ import User from '../models/User.ts'
 import argon2 from 'argon2'
 import jwt from 'jsonwebtoken'
 
-const userRepo = AppDataSource.getRepository(User)
 export const genSvg = (name: string) => {
     const initials = name.split(' ').map(w => w.charAt(0).toUpperCase()).slice(0, 5).join('')
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
@@ -25,34 +24,31 @@ export const frmtName = (name: string) => {
     const cap = nameParts.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     return name = cap.join(' ')
 }
-export const valUname = async (uname: string, user_id?: number) => {
+export const valUname = async (uname: string, id?: Types.ObjectId) => {
     if (!uname) {
         return "Username can't be empty!"
     } else if (!/^[\w\d]+$/.test(uname)) {
         return "Username can only contain Latin Alphabets, Numbers, and Underscores!"
     } else if (uname.length >= 20) {
         return "Username is too long!"
-    } else if (await userRepo.findOne({
-        where: {
-            username: frmtUname(uname),
-            ...(user_id && { user_id: Not(user_id) })
-        }
+    } else if (await User.findOne({
+        username: frmtUname(uname),
+        ...(id && { _id: { $ne: id } })
     })) {
         return "Username is unavailable!"
     }
     return
 }
 export const frmtUname = (uname: string) => uname.toLowerCase()
-export const valEmail = async (email: string, user_id?: number) => {
+export const valEmail = async (email: string, id?: Types.ObjectId) => {
     if (!email) {
         return "Email can't be empty!"
     } else if (!/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
         return "Email must be valid!"
-    } else if (await userRepo.findOne({
-        where: {
-            email,
-            ...(user_id && { user_id: Not(user_id) })
-        }
+    } else if (await User.findOne({
+        email,
+        ...(id && { id: { $ne: id } })
+
     })) {
         return "Email is already registered!"
     }
@@ -70,7 +66,7 @@ export const Hash = async (pass: string) => {
             for (let i = r.s; i <= r.e; i++) str.push(String.fromCharCode(i))
         })
         let rslt = ''
-        for (let i = 0; i < 2048; i++) {
+        for (let i = 0; i < 512; i++) {
             const shfl = Math.floor(Math.random() * str.length)
             rslt += str[shfl]
         }
@@ -84,8 +80,8 @@ export const Hash = async (pass: string) => {
         type: 2,
         salt: Buffer.from(genSecKey(), 'utf-8')
     }
-    return await argon2.hash(pass + process.env.PEPPER, opt)
+    return await argon2.hash(pass + process.env['PEPPER'], opt)
 }
-export const verHash = async (pass: string, hashedPass: string) => await argon2.verify(hashedPass, pass + process.env.PEPPER)
-export const genToken = (user_id: Types.ObjectId) => jwt.sign({ user_id }, process.env.SECRET_KEY!, { algorithm: 'HS512', expiresIn: '30d' })
-export const verToken = (t: string) => jwt.verify(t, process.env.SECRET_KEY!) as jwt.JwtPayload
+export const verHash = async (pass: string, hashedPass: string) => await argon2.verify(hashedPass, pass + process.env['PEPPER'])
+export const genToken = (id: Types.ObjectId) => jwt.sign({ id }, process.env['SECRET_KEY']!, { algorithm: 'HS512', expiresIn: '30d' })
+export const verToken = (t: string) => jwt.verify(t, process.env['SECRET_KEY']!) as jwt.JwtPayload

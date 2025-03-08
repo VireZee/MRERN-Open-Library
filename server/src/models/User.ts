@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types } from 'mongoose'
 
-interface IUser extends Document {
+export interface IUser extends Document {
     _id: Types.ObjectId
     photo: Buffer
     name: string
@@ -21,5 +21,4 @@ const UserSchema = new Schema<IUser>({
     updated: { type: Date },
     created: { type: Date, required: true }
 })
-const UserModel = mongoose.model<IUser>('User', UserSchema)
-export default UserModel
+export const User = mongoose.model<IUser>('User', UserSchema)
