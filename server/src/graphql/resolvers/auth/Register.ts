@@ -35,8 +35,7 @@ const Register = async (_: null, args: { name: string; uname: string; email: str
         })
         return true
     } catch (e) {
-        if (e instanceof GraphQLError) throw e
-        else throw e
+        throw e
     }
 }
 export default Register

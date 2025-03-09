@@ -44,8 +44,7 @@ const Settings = async (_: null, args: { photo: string; name: string; uname: str
         }
         return true
     } catch (e) {
-        if (e instanceof GraphQLError) throw e
-        else throw e
+        throw e
     }
 }
 export default Settings

@@ -23,8 +23,7 @@ const Login = async (_: null, args: { emailOrUname: string, pass: string }, cont
         })
         return true
     } catch (e) {
-        if (e instanceof GraphQLError) throw e
-        else throw e
+        throw e
     }
 }
 export default Login

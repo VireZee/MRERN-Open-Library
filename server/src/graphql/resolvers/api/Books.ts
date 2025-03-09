@@ -1,11 +1,10 @@
 import { Types } from 'mongoose'
-import Book from '../../../models/Collection.ts'
-import { GraphQLError } from 'graphql'
+import { Book } from '../../../models/Collection.ts'
 
 const Books = async (parent: { id: Types.ObjectId }) => {
     try {
         const { id } = parent
-        const books = await Book.findById(id)
+        const books = await Book.find({ user_id: id })
         return books.map(book => ({
             author_key: book.author_key,
             cover_edition_key: book.cover_edition_key,
@@ -13,8 +12,8 @@ const Books = async (parent: { id: Types.ObjectId }) => {
             title: book.title,
             author_name: book.author_name
         }))
-    } catch {
-        throw new GraphQLError('Internal Server Error', { extensions: { code: '500' } })
+    } catch (e) {
+        throw e
     }
 }
 export default Books
