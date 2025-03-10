@@ -1,5 +1,15 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
+export interface Errors {
+    photo?: string
+    name?: string
+    uname?: string
+    email?: string
+    oldPass?: string
+    newPass?: string
+    rePass?: string
+}
 interface State {
     [key: string]: boolean | number | string | { old: boolean, new: boolean } | Errors
 }
@@ -14,15 +24,6 @@ const initialState: State = {
     rePass: '',
     show: { old: false, new: false },
     errors: {}
-}
-export interface Errors {
-    photo?: string
-    name?: string
-    uname?: string
-    email?: string
-    oldPass?: string
-    newPass?: string
-    rePass?: string
 }
 const SettingsAction = createSlice({
     name: 'SET',

@@ -1,9 +1,10 @@
 import React from 'react'
 import { useMutation, ApolloError } from '@apollo/client'
-import { SETTINGS, DELETE } from '../graphql/auth/Settings'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../redux/Store'
-import { setIsDropdownOpen, change, setShow, setErrors, Errors } from '../redux/SettingsAction'
+import type { RootState } from '../../store/index.ts'
+import type { Errors } from '../../store/slices/auth/Settings.ts'
+import { setIsDropdownOpen, change, setShow, setErrors } from '../../store/slices/auth/Settings.ts'
+import { SETTINGS as SettingsGQL, DELETE as DeleteGQL } from '../../graphql/mutations/auth/Settings.ts'
 
 interface Props {
     isUser: {
@@ -14,8 +15,8 @@ interface Props {
     }
 }
 const Settings: React.FC<Props> = ({ isUser }) => {
-    const [settings, { loading: setLoad }] = useMutation(SETTINGS)
-    const [del, { loading: delLoad }] = useMutation(DELETE)
+    const [settings, { loading: setLoad }] = useMutation(SettingsGQL)
+    const [del, { loading: delLoad }] = useMutation(DeleteGQL)
     const inputFileRef = React.useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
     const setState = useSelector((state: RootState) => state.SET)
@@ -35,8 +36,8 @@ const Settings: React.FC<Props> = ({ isUser }) => {
         reader.readAsDataURL(file)
         reader.onload = () => {
             const base64String = reader.result!.toString().split(',')[1]
-            const format = imgFormat(base64String)
-            if (format) dispatch(change({ name: 'photo', value: base64String }))
+            const format = imgFormat(base64String!)
+            if (format) dispatch(change({ name: 'photo', value: base64String! }))
             else alert('Invalid file format. Please upload an JPG/JPEG, PNG, GIF, or SVG image!')
         }
         dispatch(setErrors({ ...setState.errors, photo: '' }))

@@ -1,12 +1,13 @@
 import React from 'react'
 import { useMutation, ApolloError } from '@apollo/client'
-import RegisterGQL from '../graphql/auth/Register'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../redux/Store'
-import { change, setShow, setErrors, Errors } from '../redux/RegisterAction'
+import type { RootState } from '../../store/index.ts'
+import type { Errors } from '../../store/slices/auth/Register.ts'
+import { change, setShow, setErrors } from '../../store/slices/auth/Register.ts'
+import RegisterGQL from '../../graphql/mutations/auth/Register.ts'
 
 const Register: React.FC = () => {
-    const [register, { loading }] = useMutation(RegisterGQL)
+    const [reg, { loading }] = useMutation(RegisterGQL)
     const dispatch = useDispatch()
     const regState = useSelector((state: RootState) => state.REG)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +19,7 @@ const Register: React.FC = () => {
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const { data } = await register({
+            const { data } = await reg({
                 variables: {
                     name: regState.name,
                     uname: regState.uname,

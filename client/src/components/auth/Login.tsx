@@ -1,12 +1,12 @@
 import React from 'react'
 import { useMutation, ApolloError } from '@apollo/client'
-import LoginGQL from '../graphql/auth/Login'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../redux/Store'
-import { change, setShow, setError } from '../redux/LoginAction'
+import type { RootState } from '../../store/index.ts'
+import { change, setShow, setError } from '../../store/slices/auth/Login.ts'
+import LoginGQL from '../../graphql/mutations/auth/Login.ts'
 
 const Login: React.FC = () => {
-    const [login, { loading }] = useMutation(LoginGQL)
+    const [log, { loading }] = useMutation(LoginGQL)
     const dispatch = useDispatch()
     const logState = useSelector((state: RootState) => state.LOG)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const { data } = await login({
+            const { data } = await log({
                 variables: {
                     emailOrUname: logState.emailOrUname,
                     pass: logState.pass
