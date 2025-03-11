@@ -15,7 +15,7 @@ interface Props {
     }
 }
 const Settings: React.FC<Props> = ({ isUser }) => {
-    const [settings, { loading: setLoad }] = useMutation(SettingsGQL)
+    const [set, { loading: setLoad }] = useMutation(SettingsGQL)
     const [del, { loading: delLoad }] = useMutation(DeleteGQL)
     const inputFileRef = React.useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
@@ -59,7 +59,7 @@ const Settings: React.FC<Props> = ({ isUser }) => {
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const { data } = await settings({
+            const { data } = await set({
                 variables: {
                     photo: setState.photo,
                     name: setState.name,
