@@ -9,7 +9,7 @@ import Net from '../common/Internet'
 
 const API: React.FC = () => {
     const { loading, data, error } = useQuery(CheckGQL)
-    const [gnr] = useMutation(GenerateGQL)
+    const [gen] = useMutation(GenerateGQL)
     const dispatch = useDispatch()
     const apiState = useSelector((state: RootState) => state.API)
     React.useEffect(() => {
@@ -30,7 +30,7 @@ const API: React.FC = () => {
     }
     const generate = async () => {
         try {
-            const { data } = await gnr()
+            const { data } = await gen()
             if (data) dispatch(setApiKey(data.generate))
         } catch (err) {
             if (err instanceof ApolloError) alert(err.message)
