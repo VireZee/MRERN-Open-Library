@@ -1,10 +1,10 @@
 import React from 'react'
 import { useMutation, ApolloError } from '@apollo/client'
 import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../../store/index.ts'
-import type { Errors } from '../../store/slices/auth/Register.ts'
-import { change, setShow, setErrors } from '../../store/slices/auth/Register.ts'
-import RegisterGQL from '../../graphql/mutations/auth/Register.ts'
+import type { RootState } from '../../store/index'
+import type { Errors } from '../../store/slices/auth/Register'
+import { change, setShow, setErrors } from '../../store/slices/auth/Register'
+import RegisterGQL from '../../graphql/mutations/auth/Register'
 
 const Register: React.FC = () => {
     const [reg, { loading }] = useMutation(RegisterGQL)

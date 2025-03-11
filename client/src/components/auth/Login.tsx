@@ -1,9 +1,9 @@
 import React from 'react'
 import { useMutation, ApolloError } from '@apollo/client'
 import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../../store/index.ts'
-import { change, setShow, setError } from '../../store/slices/auth/Login.ts'
-import LoginGQL from '../../graphql/mutations/auth/Login.ts'
+import type { RootState } from '../../store/index'
+import { change, setShow, setError } from '../../store/slices/auth/Login'
+import LoginGQL from '../../graphql/mutations/auth/Login'
 
 const Login: React.FC = () => {
     const [log, { loading }] = useMutation(LoginGQL)

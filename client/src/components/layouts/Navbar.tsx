@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useMutation, ApolloError } from '@apollo/client'
 import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../../store/index.ts'
-import { setActive, setIsDropdownOpen } from '../../store/slices/layouts/Navbar.ts'
-import LogoutGQL from '../../graphql/mutations/auth/Logout.ts'
+import type { RootState } from '../../store/index'
+import { setActive, setIsDropdownOpen } from '../../store/slices/layouts/Navbar'
+import LogoutGQL from '../../graphql/mutations/auth/Logout'
 
 interface Props {
     isUser: {

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useMutation, ApolloError } from '@apollo/client'
 import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../../store/index.ts'
-import type { Errors } from '../../store/slices/auth/Settings.ts'
-import { setIsDropdownOpen, change, setShow, setErrors } from '../../store/slices/auth/Settings.ts'
-import { SETTINGS as SettingsGQL, DELETE as DeleteGQL } from '../../graphql/mutations/auth/Settings.ts'
+import type { RootState } from '../../store/index'
+import type { Errors } from '../../store/slices/auth/Settings'
+import { setIsDropdownOpen, change, setShow, setErrors } from '../../store/slices/auth/Settings'
+import { SETTINGS as SettingsGQL, DELETE as DeleteGQL } from '../../graphql/mutations/auth/Settings'
 
 interface Props {
     isUser: {
