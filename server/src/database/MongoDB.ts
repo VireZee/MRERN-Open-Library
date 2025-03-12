@@ -3,7 +3,7 @@ import '../configs/env.ts'
 
 const MongoDB = async () => {
     try {
-        await mongoose.connect(`mongodb://${process.env['DB_HOST']}:${process.env['MONGODB_PORT']}/mrern_open_library`)
+        await mongoose.connect(`mongodb://${process.env['MONGODB_USER']}:${process.env['MONGODB_PASS']}@${process.env['DB_HOST']}:${process.env['MONGODB_PORT']}/${process.env['MONGODB_NAME']}?directConnection=true&authMechanism=SCRAM-SHA-256`)
         const collections = await mongoose.connection.db!.listCollections().toArray()
         const collectionNames = collections.map(col => col.name)
         const targetCollections = ['users', 'books']

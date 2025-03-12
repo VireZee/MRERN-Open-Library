@@ -1,12 +1,7 @@
-import Redis from 'ioredis'
+import { Redis } from 'ioredis'
 
-const redis = new Redis({
-    host: process.env['DB_HOST'],
-    port: process.env['REDIS_PORT'],
-    password: process.env['REDIS_PASS'],
-    db: 0
+const RedisClient = new Redis({
+    host: process.env['DB_HOST']!,
+    password: process.env['REDIS_PASS']!
 })
-redis.on('error', (err) => {
-    console.error('Redis Error:', err)
-})
-export default redis
+export default RedisClient

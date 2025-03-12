@@ -4,7 +4,7 @@ import { FETCH, REMOVE } from '../graphql/book/Collection'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/Store'
 import { setOnline, setLoad, Books, setBooks, setCurrentPage, setTotalPages } from '../redux/CollectionAction'
-import Load from './Load'
+import Load from '../common/Load'
 import Net from '../common/Internet'
 import NB from '../common/NoBooks'
 

@@ -5,7 +5,7 @@ import { FETCH, ADD } from '../graphql/book/Home'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/Store'
 import { setOnline, setLoad, Books, setBooks, setCurrentPage, setTotalPages, setStatus } from '../redux/HomeAction'
-import Load from './Load'
+import Load from '../common/Load'
 import Net from '../common/Internet'
 import NB from '../common/NoBooks'
 
