@@ -9,7 +9,7 @@ const Auth = async (_: null, __: {}, context: { req: Request }) => {
     if (!t) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
     try {
         const decoded = verToken(t)
-        const id = decoded.id
+        const id = decoded['id']
         const userCache = await Redis.get(`user:${id}`)
         if (userCache) {
             const userData = JSON.parse(userCache)
@@ -20,7 +20,7 @@ const Auth = async (_: null, __: {}, context: { req: Request }) => {
                 email: userData.email
             }
         }
-        const user = await User.findOne({ _id: id })
+        const user = await User.findById(id)
         if (!user) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
         await Redis.setex(`user:${id}`, 3600, JSON.stringify({
             photo: user.photo,
