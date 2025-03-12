@@ -4,36 +4,37 @@ import type { Request } from 'express'
 import { verToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
+interface Cache {
+    photo: string;
+    name: string;
+    username: string;
+    email: string;
+}
 const Auth = async (_: null, __: {}, context: { req: Request }) => {
     const t = context.req.cookies['!']
     if (!t) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
     try {
         const decoded = verToken(t)
         const id = decoded['id']
-        const userCache = await Redis.get(`user:${id}`)
-        if (userCache) {
-            const userData = JSON.parse(userCache)
-            return {
-                photo: Buffer.from(userData.photo).toString('base64'),
-                name: userData.name,
-                uname: userData.username,
-                email: userData.email
-            }
-        }
+        const res = (cache: Cache) => ({
+            photo: Buffer.from(cache.photo).toString('base64'),
+            name: cache.name,
+            uname: cache.username,
+            email: cache.email
+        })
+        const userCache = await Redis.call('JSON.GET', `user:${id}`) as Cache
+        if (userCache) return res(userCache)
         const user = await User.findById(id)
         if (!user) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
-        await Redis.setex(`user:${id}`, 3600, JSON.stringify({
-            photo: user.photo,
+        await Redis.call('JSON.SET', `user:${id}`, '$', JSON.stringify({
+            photo: user.photo.toString(),
             name: user.name,
-            uname: user.username,
+            username: user.username,
             email: user.email
         }))
-        return {
-            photo: Buffer.from(user.photo).toString('base64'),
-            name: user.name,
-            uname: user.username,
-            email: user.email
-        }
+        await Redis.expire(`user:${id}`, 3600)
+        const newUserCache = await Redis.call('JSON.GET', `user:${id}`) as Cache
+        return res(newUserCache)
     } catch (e) {
         throw e
     }

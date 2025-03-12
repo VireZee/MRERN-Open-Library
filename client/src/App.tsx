@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from './store/index'
 import { setUser, setSearch } from './store/slices/core/App'
 import AuthGQL from './graphql/queries/auth/Auth'
-import './styles/App.css'
+import './assets/styles/global.css'
 import Nav from './components/layouts/Navbar'
-import Home from './components/views/Home'
+// import Home from './components/views/Home'
 import Reg from './components/auth/Register'
 import Log from './components/auth/Login'
 // import Col from './components/views/Collection'
@@ -41,11 +41,11 @@ const App: React.FC = () => {
             )}
             <main>
                 <Routes>
-                    <Route path='' element={<Home isUser={appState.user} search={appState.search} />} />
+                    {/* <Route path='' element={<Home isUser={appState.user} search={appState.search} />} /> */}
                     <Route path='register' element={!appState.user ? <Reg /> : <Navigate to='/' />} />
                     <Route path='login' element={!appState.user ? <Log /> : <Navigate to='/' />} />
-                    <Route path=':query' element={<Home isUser={appState.user} search={appState.search} />} />
-                    <Route path=':query/:page' element={<Home isUser={appState.user} search={appState.search} />} />
+                    {/* <Route path=':query' element={<Home isUser={appState.user} search={appState.search} />} />
+                    <Route path=':query/:page' element={<Home isUser={appState.user} search={appState.search} />} /> */}
                     <Route path='*' element={<NF />} />
                 </Routes>
             </main>
