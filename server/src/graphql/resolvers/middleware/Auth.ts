@@ -23,7 +23,7 @@ const Auth = async (_: null, __: {}, context: { req: Request }) => {
             email: cache.email
         })
         const userCache = await Redis.call('JSON.GET', `user:${id}`) as Cache
-        if (userCache) return res(userCache)
+        if (userCache) console.log(res(userCache))
         const user = await User.findById(id)
         if (!user) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
         await Redis.call('JSON.SET', `user:${id}`, '$', JSON.stringify({
@@ -32,9 +32,9 @@ const Auth = async (_: null, __: {}, context: { req: Request }) => {
             username: user.username,
             email: user.email
         }))
-        await Redis.expire(`user:${id}`, 3600)
+        await Redis.expire(`user:${id}`, 86400)
         const newUserCache = await Redis.call('JSON.GET', `user:${id}`) as Cache
-        return res(newUserCache)
+        return console.log(res(newUserCache))
     } catch (e) {
         throw e
     }

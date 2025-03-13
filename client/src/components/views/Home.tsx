@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
+import type { AxiosResponse } from 'axios'
 import { useQuery, useMutation, ApolloError } from '@apollo/client'
-import { FETCH, ADD } from '../graphql/book/Home'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../redux/Store'
-import { setOnline, setLoad, Books, setBooks, setCurrentPage, setTotalPages, setStatus } from '../redux/HomeAction'
+import type { RootState } from '../../store/index'
+import type { Books } from '../../store/slices/views/Home'
+import { setOnline, setLoad, setBooks, setCurrentPage, setTotalPages, setStatus } from '../../store/slices/views/Home'
+import FetchGQL from '../../graphql/queries/book/Home'
+import AddGQL from '../../graphql/mutations/book/Home'
 import Load from '../common/Load'
 import Net from '../common/Internet'
 import NB from '../common/NoBooks'
@@ -19,8 +22,8 @@ interface URLParams {
     page?: string
 }
 const Home: React.FC<Props> = ({ isUser, search }) => {
-    const { refetch } = useQuery(FETCH, { skip: true })
-    const [add] = useMutation(ADD)
+    const { refetch } = useQuery(FetchGQL, { skip: true })
+    const [add] = useMutation(AddGQL)
     const dispatch = useDispatch()
     const homeState = useSelector((state: RootState) => state.HOME)
     const { title, isbn, page }: URLParams = Object.fromEntries(new URLSearchParams(window.location.search))

@@ -10,11 +10,6 @@ const MongoDB = async () => {
         for (const name of targetCollections) {
             if (!collectionNames.includes(name)) {
                 await mongoose.connection.db!.createCollection(name, {
-                    timeseries: {
-                        timeField: 'timestamp',
-                        metaField: name === 'users' ? 'user_info' : 'book_info',
-                        granularity: 'minutes'
-                    },
                     collation: {
                         locale: 'en',
                         strength: 5,

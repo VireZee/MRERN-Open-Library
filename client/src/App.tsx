@@ -7,7 +7,7 @@ import { setUser, setSearch } from './store/slices/core/App'
 import AuthGQL from './graphql/queries/auth/Auth'
 import './assets/styles/global.css'
 import Nav from './components/layouts/Navbar'
-// import Home from './components/views/Home'
+import Home from './components/views/Home'
 import Reg from './components/auth/Register'
 import Log from './components/auth/Login'
 // import Col from './components/views/Collection'
@@ -41,7 +41,7 @@ const App: React.FC = () => {
             )}
             <main>
                 <Routes>
-                    {/* <Route path='' element={<Home isUser={appState.user} search={appState.search} />} /> */}
+                    <Route path='' element={<Home isUser={appState.user} search={appState.search} />} />
                     <Route path='register' element={!appState.user ? <Reg /> : <Navigate to='/' />} />
                     <Route path='login' element={!appState.user ? <Log /> : <Navigate to='/' />} />
                     {/* <Route path=':query' element={<Home isUser={appState.user} search={appState.search} />} />

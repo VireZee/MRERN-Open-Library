@@ -7,9 +7,9 @@ export interface IUser extends Document {
     username: string
     email: string
     pass: string
-    api_key?: Buffer
+    api_key: Buffer
     created: Date
-    updated?: Date
+    updated: Date
 }
 const UserSchema = new Schema<IUser>({
     photo: { type: Buffer, required: true },
@@ -20,5 +20,5 @@ const UserSchema = new Schema<IUser>({
     api_key: { type: Buffer, required: false },
     updated: { type: Date },
     created: { type: Date, required: true }
-})
+}, { versionKey: false })
 export const User = mongoose.model<IUser>('User', UserSchema)
