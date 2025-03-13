@@ -2,7 +2,7 @@ import { User } from '../../../models/User.ts'
 import type { Request } from 'express'
 import { verToken } from '../../../utils/Validation.ts'
 
-const Check = async (_: null, __: {}, context: { req: Request }) => {
+const Check = async (_: null, __: null, context: { req: Request }) => {
     const t = context.req.cookies['!']
     try {
         const { id } = verToken(t)

@@ -3,7 +3,7 @@ import type { Request, Response } from 'express'
 import { verToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
-const Delete = async (_: null, __: {}, context: { req: Request, res: Response }) => {
+const Delete = async (_: null, __: null, context: { req: Request, res: Response }) => {
     const { req, res } = context
     const t = req.cookies['!']
     try {

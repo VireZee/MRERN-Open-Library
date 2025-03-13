@@ -4,26 +4,26 @@ import type { Request } from 'express'
 import { verToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
-interface Cache {
-    photo: string;
-    name: string;
-    username: string;
-    email: string;
+interface UserCache {
+    photo: string
+    name: string
+    username: string
+    email: string
 }
-const Auth = async (_: null, __: {}, context: { req: Request }) => {
+const Auth = async (_: null, __: null, context: { req: Request }) => {
     const t = context.req.cookies['!']
     if (!t) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
     try {
         const decoded = verToken(t)
         const id = decoded['id']
-        const res = (cache: Cache) => ({
+        const res = (cache: UserCache) => ({
             photo: Buffer.from(cache.photo).toString('base64'),
             name: cache.name,
             uname: cache.username,
             email: cache.email
         })
-        const userCache = await Redis.call('JSON.GET', `user:${id}`) as Cache
-        if (userCache) console.log(res(userCache))
+        const userCache = await Redis.call('JSON.GET', `user:${id}`) as string
+        if (userCache) return res(JSON.parse(userCache))
         const user = await User.findById(id)
         if (!user) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
         await Redis.call('JSON.SET', `user:${id}`, '$', JSON.stringify({
@@ -33,8 +33,8 @@ const Auth = async (_: null, __: {}, context: { req: Request }) => {
             email: user.email
         }))
         await Redis.expire(`user:${id}`, 86400)
-        const newUserCache = await Redis.call('JSON.GET', `user:${id}`) as Cache
-        return console.log(res(newUserCache))
+        const newUserCache = await Redis.call('JSON.GET', `user:${id}`) as string
+        return res(JSON.parse(newUserCache))
     } catch (e) {
         throw e
     }

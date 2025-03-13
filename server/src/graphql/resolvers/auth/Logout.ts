@@ -1,6 +1,6 @@
 import type { Response } from 'express'
 
-const Logout = (_: null, __: {}, context: { res: Response }) => {
+const Logout = (_: null, __: null, context: { res: Response }) => {
     try {
         context.res.clearCookie('!')
         return true
