@@ -7,9 +7,9 @@ import Login from './resolvers/auth/Login.ts'
 // import AddRemove from './resolvers/book/AddRemove.ts'
 // import Check from './resolvers/api/Check.ts'
 // import Generate from './resolvers/api/Generate.ts'
-// import Settings from './resolvers/auth/Settings.ts'
-// import Logout from './resolvers/auth/Logout.ts'
-// import Delete from './resolvers/auth/Delete.ts'
+import Settings from './resolvers/auth/Settings.ts'
+import Logout from './resolvers/auth/Logout.ts'
+import Delete from './resolvers/auth/Delete.ts'
 
 export const typeDefs = Schema
 export const resolvers = {
@@ -25,8 +25,8 @@ export const resolvers = {
         // add: AddRemove,
         // remove: AddRemove,
         // generate: Generate,
-        // settings: Settings,
-        // logout: Logout,
-        // delete: Delete
+        settings: Settings,
+        logout: Logout,
+        delete: Delete
     }
 }

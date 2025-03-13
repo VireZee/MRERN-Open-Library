@@ -1,3 +1,4 @@
+import Redis from '../../../database/Redis.ts'
 import type { IUser } from '../../../models/User.ts'
 import { User } from '../../../models/User.ts'
 import type { Request, Response } from 'express'
@@ -32,7 +33,14 @@ const Settings = async (_: null, args: { photo: string; name: string; uname: str
         if (newPass) updatedUser.pass = await Hash(newPass)
         if (Object.keys(updatedUser).length > 0) {
             updatedUser.updated = new Date()
-            await User.findByIdAndUpdate(id, updatedUser, { new: true })
+            const newUserCache = await User.findByIdAndUpdate(id, updatedUser, { new: true })
+            await Redis.del(`user:${id}`)
+            await Redis.call('JSON.SET', `user:${id}`, '$', JSON.stringify({
+                photo: newUserCache!.photo.toString(),
+                name: newUserCache!.name,
+                username: newUserCache!.username,
+                email: newUserCache!.email
+            }))
             const t = genToken(user!._id)
             res.cookie('!', t, {
                 maxAge: 1000 * 60 * 60 * 24 * 30,
