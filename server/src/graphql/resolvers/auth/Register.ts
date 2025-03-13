@@ -1,4 +1,3 @@
-import Redis from '../../../database/Redis.ts'
 import { User } from '../../../models/User.ts'
 import type { Response } from 'express'
 import { genSvg, valName, frmtName, valUname, frmtUname, valEmail, Hash, genToken } from '../../../utils/Validation.ts'
@@ -26,13 +25,6 @@ const Register = async (_: null, args: { name: string; uname: string; email: str
             created: new Date()
         })
         await newUser.save()
-        await Redis.call('JSON.SET', `user:${newUser._id}`, '$', JSON.stringify({
-            photo: newUser.photo.toString(),
-            name: newUser.name,
-            username: newUser.username,
-            email: newUser.email
-        }))
-        await Redis.expire(`user:${newUser._id}`, 86400)
         const t = genToken(newUser._id)
         context.res.cookie('!', t, {
             maxAge: 1000 * 60 * 60 * 24 * 30,

@@ -14,8 +14,7 @@ const Auth = async (_: null, __: null, context: { req: Request }) => {
     const t = context.req.cookies['!']
     if (!t) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
     try {
-        const decoded = verToken(t)
-        const id = decoded['id']
+        const { id } = verToken(t)
         const res = (cache: UserCache) => ({
             photo: Buffer.from(cache.photo).toString('base64'),
             name: cache.name,
