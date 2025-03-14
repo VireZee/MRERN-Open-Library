@@ -131,8 +131,7 @@ const Settings: React.FC<Props> = ({ isUser }) => {
                                         onClick={() => {
                                             removeImage()
                                             dispatch(setIsDropdownOpen(false))
-                                        }
-                                        }
+                                        }}
                                     >
                                         Remove Image
                                     </li>
