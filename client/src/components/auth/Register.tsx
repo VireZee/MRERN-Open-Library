@@ -7,7 +7,7 @@ import { change, setShow, setErrors } from '../../store/slices/auth/Register'
 import RegisterGQL from '../../graphql/mutations/auth/Register'
 
 const Register: React.FC = () => {
-    const [reg, { loading }] = useMutation(RegisterGQL)
+    const [register, { loading }] = useMutation(RegisterGQL)
     const dispatch = useDispatch()
     const regState = useSelector((state: RootState) => state.REG)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +19,7 @@ const Register: React.FC = () => {
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const { data } = await reg({
+            const { data } = await register({
                 variables: {
                     name: regState.name,
                     uname: regState.uname,

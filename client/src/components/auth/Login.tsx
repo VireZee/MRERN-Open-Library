@@ -6,7 +6,7 @@ import { change, setShow, setError } from '../../store/slices/auth/Login'
 import LoginGQL from '../../graphql/mutations/auth/Login'
 
 const Login: React.FC = () => {
-    const [log, { loading }] = useMutation(LoginGQL)
+    const [login, { loading }] = useMutation(LoginGQL)
     const dispatch = useDispatch()
     const logState = useSelector((state: RootState) => state.LOG)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const { data } = await log({
+            const { data } = await login({
                 variables: {
                     emailOrUsername: logState.emailOrUsername,
                     pass: logState.pass

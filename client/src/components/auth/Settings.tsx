@@ -15,8 +15,8 @@ interface Props {
     }
 }
 const Settings: React.FC<Props> = ({ isUser }) => {
-    const [set, { loading: setLoad }] = useMutation(SettingsGQL)
-    const [del, { loading: delLoad }] = useMutation(DeleteGQL)
+    const [settings, { loading: setLoad }] = useMutation(SettingsGQL)
+    const [terminate, { loading: delLoad }] = useMutation(DeleteGQL)
     const inputFileRef = React.useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
     const setState = useSelector((state: RootState) => state.SET)
@@ -59,7 +59,7 @@ const Settings: React.FC<Props> = ({ isUser }) => {
     const submit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const { data } = await set({
+            const { data } = await settings({
                 variables: {
                     photo: setState.photo,
                     name: setState.name,
@@ -84,7 +84,7 @@ const Settings: React.FC<Props> = ({ isUser }) => {
     }
     const handleDeleteAccount = async () => {
         try {
-            const { data } = await del()
+            const { data } = await terminate()
             if (data.delete) {
                 alert('Account deleted!')
                 location.href = '/'
