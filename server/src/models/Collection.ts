@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types, Document } from 'mongoose';
 
-export interface ICollection extends Document {
+interface ICollection extends Document {
     _id: Types.ObjectId
     user_id: Types.ObjectId
     author_key: string[]
@@ -18,5 +18,5 @@ const CollectionSchema = new Schema<ICollection>({
     title: { type: String, required: true },
     author_name: { type: String, required: true },
     created: { type: Date, required: true}
-})
+}, { versionKey: false })
 export const Book = mongoose.model<ICollection>('Collection', CollectionSchema)

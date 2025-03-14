@@ -1,7 +1,7 @@
 import Redis from '../../../database/Redis.ts'
 import { User } from '../../../models/User.ts'
 import type { Request } from 'express'
-import { verToken } from '../../../utils/Validation.ts'
+import { verifyToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
 interface UserCache {
@@ -14,7 +14,7 @@ const Auth = async (_: null, __: null, context: { req: Request }) => {
     const t = context.req.cookies['!']
     if (!t) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
     try {
-        const { id } = verToken(t)
+        const { id } = verifyToken(t)
         const res = (cache: UserCache) => ({
             photo: Buffer.from(cache.photo).toString('base64'),
             name: cache.name,

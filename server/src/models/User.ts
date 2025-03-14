@@ -17,7 +17,7 @@ const UserSchema = new Schema<IUser>({
     username: { type: String, unique: true, maxlength: 20, required: true },
     email: { type: String, unique: true, required: true },
     pass: { type: String, required: true },
-    api_key: { type: Buffer, required: false },
+    api_key: { type: Buffer },
     updated: { type: Date },
     created: { type: Date, required: true }
 }, { versionKey: false })
