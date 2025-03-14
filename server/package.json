@@ -1,5 +1,6 @@
 {
     "name": "mrern-open-library",
+    "private": true,
     "type": "module",
     "scripts": {
         "dev": "nodemon -x ts-node src/main.ts"

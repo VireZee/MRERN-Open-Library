@@ -1,5 +1,6 @@
 {
     "name": "mrern-open-library",
+    "private": true,
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
