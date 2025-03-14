@@ -1,14 +1,14 @@
 import Redis from '../../../database/Redis.ts'
 import { User } from '../../../models/User.ts'
 import type { Request, Response } from 'express'
-import { verToken } from '../../../utils/Validation.ts'
+import { verifyToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
 const Delete = async (_: null, __: null, context: { req: Request, res: Response }) => {
     const { req, res } = context
     const t = req.cookies['!']
     try {
-        const { id } = verToken(t)
+        const { id } = verifyToken(t)
         const user = await User.findById({ id })
         if (!user) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
         await User.findByIdAndDelete(id)

@@ -3,7 +3,7 @@ import { User } from '../models/User.ts'
 import argon2 from 'argon2'
 import jwt from 'jsonwebtoken'
 
-export const genSvg = (name: string) => {
+export const generateSvg = (name: string) => {
     const initials = name.split(' ').map(w => w.charAt(0).toUpperCase()).slice(0, 5).join('')
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
         <circle cx="256" cy="256" r="256" fill="#000" />
@@ -11,7 +11,7 @@ export const genSvg = (name: string) => {
     </svg>`
     return Buffer.from(svg).toString('base64')
 }
-export const valName = (name: string) => {
+export const validateName = (name: string) => {
     if (!name) {
         return "Name can't be empty!"
     } else if (name.length >= 75) {
@@ -19,12 +19,12 @@ export const valName = (name: string) => {
     }
     return
 }
-export const frmtName = (name: string) => {
+export const formatName = (name: string) => {
     const nameParts = name.split(' ')
     const cap = nameParts.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     return name = cap.join(' ')
 }
-export const valUname = async (uname: string, id?: Types.ObjectId) => {
+export const validateUsername = async (uname: string, id?: Types.ObjectId) => {
     if (!uname) {
         return "Username can't be empty!"
     } else if (!/^[\w\d]+$/.test(uname)) {
@@ -32,15 +32,15 @@ export const valUname = async (uname: string, id?: Types.ObjectId) => {
     } else if (uname.length >= 20) {
         return "Username is too long!"
     } else if (await User.findOne({
-        username: frmtUname(uname),
+        username: formatUname(uname),
         ...(id && { _id: { $ne: id } })
     })) {
         return "Username is unavailable!"
     }
     return
 }
-export const frmtUname = (uname: string) => uname.toLowerCase()
-export const valEmail = async (email: string, id?: Types.ObjectId) => {
+export const formatUname = (uname: string) => uname.toLowerCase()
+export const validateEmail = async (email: string, id?: Types.ObjectId) => {
     if (!email) {
         return "Email can't be empty!"
     } else if (!/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
@@ -54,8 +54,8 @@ export const valEmail = async (email: string, id?: Types.ObjectId) => {
     }
     return
 }
-export const Hash = async (pass: string) => {
-    const genSecKey = () => {
+export const hash = async (pass: string) => {
+    const generateSecretKey = () => {
         const ranges = [
             { s: 0x0020, e: 0x007E },
             { s: 0x00A1, e: 0x02FF },
@@ -78,10 +78,10 @@ export const Hash = async (pass: string) => {
         memoryCost: 1024 * 1024,
         parallelism: 13,
         type: 2,
-        salt: Buffer.from(genSecKey(), 'utf-8')
+        salt: Buffer.from(generateSecretKey(), 'utf-8')
     }
     return await argon2.hash(pass + process.env['PEPPER'], opt)
 }
-export const verHash = async (pass: string, hashedPass: string) => await argon2.verify(hashedPass, pass + process.env['PEPPER'])
-export const genToken = (id: Types.ObjectId) => jwt.sign({ id }, process.env['SECRET_KEY']!, { algorithm: 'HS512', expiresIn: '30d' })
-export const verToken = (t: string) => jwt.verify(t, process.env['SECRET_KEY']!) as jwt.JwtPayload
+export const verifyHash = async (pass: string, hashedPass: string) => await argon2.verify(hashedPass, pass + process.env['PEPPER'])
+export const generateToken = (id: Types.ObjectId) => jwt.sign({ id }, process.env['SECRET_KEY']!, { algorithm: 'HS512', expiresIn: '30d' })
+export const verifyToken = (t: string) => jwt.verify(t, process.env['SECRET_KEY']!) as jwt.JwtPayload
