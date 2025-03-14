@@ -20,7 +20,7 @@ const initialState: State = {
     show: false,
     errors: {}
 }
-const RegisterAction = createSlice({
+const Register = createSlice({
     name: 'REG',
     initialState,
     reducers: {
@@ -35,5 +35,5 @@ const RegisterAction = createSlice({
         }
     }
 })
-export const { change, setShow, setErrors } = RegisterAction.actions
-export default RegisterAction.reducer
+export const { change, setShow, setErrors } = Register.actions
+export default Register.reducer

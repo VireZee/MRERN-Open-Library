@@ -10,7 +10,7 @@ const initialState: State = {
     show: false,
     error: ''
 }
-const LoginAction = createSlice({
+const Login = createSlice({
     name: 'LOG',
     initialState,
     reducers: {
@@ -25,5 +25,5 @@ const LoginAction = createSlice({
         }
     }
 })
-export const { change, setShow, setError } = LoginAction.actions
-export default LoginAction.reducer
+export const { change, setShow, setError } = Login.actions
+export default Login.reducer

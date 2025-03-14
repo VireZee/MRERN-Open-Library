@@ -15,7 +15,7 @@ const initialState: State = {
     user: undefined,
     loadUser: true
 }
-const AppAction = createSlice({
+const App = createSlice({
     name: 'APP',
     initialState,
     reducers: {
@@ -28,5 +28,5 @@ const AppAction = createSlice({
         }
     }
 })
-export const { setUser, setSearch } = AppAction.actions
-export default AppAction.reducer
+export const { setUser, setSearch } = App.actions
+export default App.reducer

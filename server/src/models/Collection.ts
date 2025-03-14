@@ -17,6 +17,6 @@ const CollectionSchema = new Schema<ICollection>({
     cover_i: { type: Number, required: true },
     title: { type: String, required: true },
     author_name: { type: String, required: true },
-    created: { type: Date, required: true}
+    created: { type: Date, required: true }
 }, { versionKey: false })
 export const Book = mongoose.model<ICollection>('Collection', CollectionSchema)

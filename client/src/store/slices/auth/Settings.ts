@@ -25,7 +25,7 @@ const initialState: State = {
     show: { old: false, new: false },
     errors: {}
 }
-const SettingsAction = createSlice({
+const Settings = createSlice({
     name: 'SET',
     initialState,
     reducers: {
@@ -43,5 +43,5 @@ const SettingsAction = createSlice({
         }
     }
 })
-export const { setIsDropdownOpen, change, setShow, setErrors } = SettingsAction.actions
-export default SettingsAction.reducer
+export const { setIsDropdownOpen, change, setShow, setErrors } = Settings.actions
+export default Settings.reducer

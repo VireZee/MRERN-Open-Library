@@ -8,7 +8,7 @@ const initialState: State = {
     active: 'home',
     isDropdownOpen: false
 }
-const NavbarAction = createSlice({
+const Navbar = createSlice({
     name: 'NAV',
     initialState,
     reducers: {
@@ -20,5 +20,5 @@ const NavbarAction = createSlice({
         }
     }
 })
-export const { setActive, setIsDropdownOpen } = NavbarAction.actions
-export default NavbarAction.reducer
+export const { setActive, setIsDropdownOpen } = Navbar.actions
+export default Navbar.reducer
