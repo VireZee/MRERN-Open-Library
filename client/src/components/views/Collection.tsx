@@ -1,9 +1,12 @@
 import React from 'react'
-import { useQuery, useMutation, ApolloQueryResult, ApolloError } from '@apollo/client'
-import { FETCH, REMOVE } from '../graphql/book/Collection'
+import type { ApolloQueryResult } from '@apollo/client'
+import { useQuery, useMutation, ApolloError } from '@apollo/client'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../redux/Store'
-import { setOnline, setLoad, Books, setBooks, setCurrentPage, setTotalPages } from '../redux/CollectionAction'
+import type { RootState } from '../../store/index'
+import type { Books } from '../../store/slices/views/Collection'
+import { setOnline, setLoad, setBooks, setCurrentPage, setTotalPages } from '../../store/slices/views/Collection'
+import FetchGQL from '../../graphql/queries/book/Collection'
+import RemoveGQL from '../../graphql/mutations/book/Collection'
 import Load from '../common/Load'
 import Net from '../common/Internet'
 import NB from '../common/NoBooks'
@@ -16,8 +19,8 @@ interface URLParams {
     page?: string
 }
 const Collection: React.FC<Props> = ({ search }) => {
-    const { refetch } = useQuery(FETCH, { skip: true })
-    const [rmv] = useMutation(REMOVE)
+    const { refetch } = useQuery(FetchGQL, { skip: true })
+    const [remove] = useMutation(RemoveGQL)
     const dispatch = useDispatch()
     const colState = useSelector((state: RootState) => state.COL)
     const { title, page }: URLParams = Object.fromEntries(new URLSearchParams(window.location.search))
@@ -105,7 +108,7 @@ const Collection: React.FC<Props> = ({ search }) => {
     }
     const removeCollection = async (author_key: string[], cover_edition_key: string, cover_i: number) => {
         try {
-            const { data } = await rmv({ variables: { author_key, cover_edition_key, cover_i } })
+            const { data } = await remove({ variables: { author_key, cover_edition_key, cover_i } })
             if (data.remove) fetchCollection()
         } catch (err) {
             if (err instanceof ApolloError) alert(err.message)
