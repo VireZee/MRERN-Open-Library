@@ -15,14 +15,14 @@ const Auth = async (_: null, __: null, context: { req: Request }) => {
     if (!t) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
     try {
         const { id } = verifyToken(t)
-        const res = (cache: UserCache) => ({
+        const userCache = await Redis.call('JSON.GET', `user:${id}`) as string
+        const formatUserCache = (cache: UserCache) => ({
             photo: Buffer.from(cache.photo).toString('base64'),
             name: cache.name,
             uname: cache.username,
             email: cache.email
         })
-        const userCache = await Redis.call('JSON.GET', `user:${id}`) as string
-        if (userCache) return res(JSON.parse(userCache))
+        if (userCache) return formatUserCache(JSON.parse(userCache))
         const user = await User.findById(id)
         if (!user) throw new GraphQLError('Unauthorized', { extensions: { code: '401' } })
         await Redis.call('JSON.SET', `user:${id}`, '$', JSON.stringify({
@@ -33,7 +33,7 @@ const Auth = async (_: null, __: null, context: { req: Request }) => {
         }))
         await Redis.expire(`user:${id}`, 86400)
         const newUserCache = await Redis.call('JSON.GET', `user:${id}`) as string
-        return res(JSON.parse(newUserCache))
+        return formatUserCache(JSON.parse(newUserCache))
     } catch (e) {
         throw e
     }

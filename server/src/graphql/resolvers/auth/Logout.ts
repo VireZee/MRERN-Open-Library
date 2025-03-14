@@ -3,11 +3,12 @@ import type { Request, Response } from 'express'
 import { verifyToken } from '../../../utils/Validation.ts'
 
 const Logout = async (_: null, __: null, context: { req: Request, res: Response }) => {
-    const t = context.req.cookies['!']
+    const { req, res } = context
+    const t = req.cookies['!']
     try {
         const { id } = verifyToken(t)
         await Redis.del(`user:${id}`)
-        context.res.clearCookie('!')
+        res.clearCookie('!')
         return true
     } catch (e) {
         throw e

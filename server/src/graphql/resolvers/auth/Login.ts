@@ -3,13 +3,13 @@ import type { Response } from 'express'
 import { verifyHash, generateToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
-const Login = async (_: null, args: { emailOrUname: string, pass: string }, context: { res: Response }) => {
+const Login = async (_: null, args: { emailOrUsername: string, pass: string }, context: { res: Response }) => {
     try {
-        const { emailOrUname, pass } = args
+        const { emailOrUsername, pass } = args
         const user = await User.findOne({
             $or: [
-                { email: emailOrUname.toLowerCase() },
-                { username: emailOrUname.toLowerCase() }
+                { email: emailOrUsername.toLowerCase() },
+                { username: emailOrUsername.toLowerCase() }
             ]
         })
         if (!user || !(await verifyHash(pass, user!.pass))) throw new GraphQLError('Invalid login credentials!', { extensions: { code: '401' } })

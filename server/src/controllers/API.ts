@@ -17,9 +17,9 @@ const API = async (req: Request, res: Response) => {
         return res.setHeader('Content-Type', 'application/json').send(JSON.stringify(response, null, 2))
     } catch (e) {
         if (e instanceof Error) {
-            return res.status(500).json({ e: e.message })
+            return res.status(500).json({ error: e.message })
         } else {
-            return res.status(500).json()
+            return res.status(500).json({ unknownError: e })
         }
     }
 }
