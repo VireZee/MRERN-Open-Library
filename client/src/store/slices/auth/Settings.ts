@@ -35,7 +35,7 @@ const Settings = createSlice({
         change: (state, { payload: { name, value } }: PayloadAction<{ name: keyof State, value: number | string }>) => {
             state[name] = value
         },
-        setShow: (state, { payload }: PayloadAction<{ old: boolean; new: boolean }>) => {
+        setShow: (state, { payload }: PayloadAction<{ old: boolean, new: boolean }>) => {
             state['show'] = payload
         },
         setErrors: (state, { payload }: PayloadAction<Errors>) => {

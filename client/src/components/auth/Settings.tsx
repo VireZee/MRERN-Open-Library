@@ -17,9 +17,15 @@ interface Props {
 const Settings: React.FC<Props> = ({ isUser }) => {
     const [settings, { loading: setLoad }] = useMutation(SettingsGQL)
     const [terminate, { loading: delLoad }] = useMutation(DeleteGQL)
-    const inputFileRef = React.useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
     const setState = useSelector((state: RootState) => state.SET)
+    React.useEffect(() => {
+        dispatch(change({ name: 'photo', value: isUser.photo }))
+        dispatch(change({ name: 'name', value: isUser.name }))
+        dispatch(change({ name: 'uname', value: isUser.uname }))
+        dispatch(change({ name: 'email', value: isUser.email }))
+    }, [isUser])
+    const inputFileRef = React.useRef<HTMLInputElement>(null)
     const imgFormat = (base64String: string) => {
         const decodedString = atob(base64String)
         const hexString = Array.from(decodedString).map(char => char.charCodeAt(0).toString(16).toUpperCase().padStart(2, '0')).join('')
@@ -94,12 +100,6 @@ const Settings: React.FC<Props> = ({ isUser }) => {
             else alert('An unexpected error occurred.')
         }
     }
-    React.useEffect(() => {
-        dispatch(change({ name: 'photo', value: isUser.photo }))
-        dispatch(change({ name: 'name', value: isUser.name }))
-        dispatch(change({ name: 'uname', value: isUser.uname }))
-        dispatch(change({ name: 'email', value: isUser.email }))
-    }, [isUser])
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">

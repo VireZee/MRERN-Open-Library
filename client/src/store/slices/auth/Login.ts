@@ -5,7 +5,7 @@ interface State {
     [key: string]: string | boolean
 }
 const initialState: State = {
-    emailOrUsername: '',
+    emailOrUname: '',
     pass: '',
     show: false,
     error: ''

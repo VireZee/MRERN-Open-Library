@@ -18,7 +18,7 @@ interface URLParams {
     isbn?: string
 }
 const Navbar: React.FC<Props> = ({ isUser, onSearch }) => {
-    const [out] = useMutation(LogoutGQL)
+    const [logout] = useMutation(LogoutGQL)
     const dispatch = useDispatch()
     const navState = useSelector((state: RootState) => state.NAV)
     const { title, isbn }: URLParams = Object.fromEntries(new URLSearchParams(window.location.search))
@@ -42,7 +42,7 @@ const Navbar: React.FC<Props> = ({ isUser, onSearch }) => {
     }
     const handleLogOut = async () => {
         try {
-            const { data } = await out()
+            const { data } = await logout()
             if (data.logout) location.href = '/'
         } catch (err) {
             if (err instanceof ApolloError) alert(err.message)

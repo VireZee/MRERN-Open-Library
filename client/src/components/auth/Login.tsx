@@ -20,7 +20,7 @@ const Login: React.FC = () => {
         try {
             const { data } = await login({
                 variables: {
-                    emailOrUsername: logState.emailOrUsername,
+                    emailOrUname: logState.emailOrUname,
                     pass: logState.pass
                 }
             })
@@ -39,8 +39,8 @@ const Login: React.FC = () => {
                         <label className="text-md text-gray-700">Email / Username</label>
                         <input
                             type="text"
-                            name="emailOrUsername"
-                            value={logState.emailOrUsername}
+                            name="emailOrUname"
+                            value={logState.emailOrUname}
                             onChange={handleChange}
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-black"
                         />
