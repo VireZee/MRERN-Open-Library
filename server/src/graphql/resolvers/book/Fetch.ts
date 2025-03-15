@@ -1,4 +1,4 @@
-import { Collection } from '../../../models/Collection.ts'
+import Collection from '../../../models/Collection.ts'
 import type { Request } from 'express'
 import { verifyToken } from '../../../utils/Validation.ts'
 

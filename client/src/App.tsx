@@ -10,7 +10,7 @@ import Nav from './components/layouts/Navbar'
 import Home from './components/views/Home'
 import Reg from './components/auth/Register'
 import Log from './components/auth/Login'
-// import Col from './components/views/Collection'
+import Col from './components/views/Collection'
 // import API from './components/views/API'
 // import Set from './components/auth/Settings'
 import NF from './components/common/NotFound'
@@ -46,6 +46,7 @@ const App: React.FC = () => {
                     <Route path='login' element={!appState.user ? <Log /> : <Navigate to='/' />} />
                     {/* <Route path=':query' element={<Home isUser={appState.user} search={appState.search} />} />
                     <Route path=':query/:page' element={<Home isUser={appState.user} search={appState.search} />} /> */}
+                    <Route path='collection' element={<Col search={appState.search} />} />
                     <Route path='*' element={<NF />} />
                 </Routes>
             </main>

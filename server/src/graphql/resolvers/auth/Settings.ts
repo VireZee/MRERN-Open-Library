@@ -2,7 +2,7 @@ import Redis from '../../../database/Redis.ts'
 import type { IUser } from '../../../models/User.ts'
 import { User } from '../../../models/User.ts'
 import type { Request, Response } from 'express'
-import { validateName, formatName, validateUsername, formatUname, validateEmail, hash, verifyHash, generateToken, verifyToken } from '../../../utils/Validation.ts'
+import { validateName, formatName, validateUsername, formatUsername, validateEmail, hash, verifyHash, generateToken, verifyToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
 const Settings = async (_: null, args: { photo: string; name: string; uname: string; email: string; oldPass: string; newPass: string; rePass: string; show: boolean }, context: { req: Request, res: Response }) => {
@@ -28,7 +28,7 @@ const Settings = async (_: null, args: { photo: string; name: string; uname: str
         const updatedUser: Partial<IUser> = {}
         if (photo && Buffer.compare(Buffer.from(photo, 'base64'), user!.photo) !== 0) updatedUser.photo = Buffer.from(photo, 'base64')
         if (name && name !== user!.name) updatedUser.name = formatName(name)
-        if (uname && uname !== user!.username) updatedUser.username = formatUname(uname)
+        if (uname && uname !== user!.username) updatedUser.username = formatUsername(uname)
         if (email && email !== user!.email) updatedUser.email = email
         if (newPass) updatedUser.pass = await hash(newPass)
         if (Object.keys(updatedUser).length > 0) {

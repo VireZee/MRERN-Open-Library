@@ -19,4 +19,5 @@ const CollectionSchema = new Schema<ICollection>({
     author_name: { type: String, required: true },
     created: { type: Date, required: true }
 }, { versionKey: false })
-export const Collection = mongoose.model<ICollection>('Collection', CollectionSchema)
+const Collection = mongoose.model<ICollection>('Collection', CollectionSchema)
+export default Collection

@@ -1,6 +1,6 @@
 import { User } from '../../../models/User.ts'
 import type { Response } from 'express'
-import { generateSvg, validateName, formatName, validateUsername, formatUname, validateEmail, hash, generateToken } from '../../../utils/Validation.ts'
+import { generateSvg, validateName, formatName, validateUsername, formatUsername, validateEmail, hash, generateToken } from '../../../utils/Validation.ts'
 import { GraphQLError } from 'graphql'
 
 const Register = async (_: null, args: { name: string; uname: string; email: string; pass: string; rePass: string; show: boolean }, context: { res: Response }) => {
@@ -19,7 +19,7 @@ const Register = async (_: null, args: { name: string; uname: string; email: str
         const newUser = new User({
             photo: Buffer.from(generateSvg(name), 'base64'),
             name: formatName(name),
-            username: formatUname(uname),
+            username: formatUsername(uname),
             email,
             pass: await hash(pass),
             created: new Date()

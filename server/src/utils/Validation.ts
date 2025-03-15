@@ -32,14 +32,14 @@ export const validateUsername = async (uname: string, id?: Types.ObjectId) => {
     } else if (uname.length >= 20) {
         return "Username is too long!"
     } else if (await User.findOne({
-        username: formatUname(uname),
+        username: formatUsername(uname),
         ...(id && { _id: { $ne: id } })
     })) {
         return "Username is unavailable!"
     }
     return
 }
-export const formatUname = (uname: string) => uname.toLowerCase()
+export const formatUsername = (uname: string) => uname.toLowerCase()
 export const validateEmail = async (email: string, id?: Types.ObjectId) => {
     if (!email) {
         return "Email can't be empty!"

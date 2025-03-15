@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { Collection } from '../../../models/Collection.ts'
+import Col from '../../../models/Collection.ts'
 import type { Request } from 'express'
 import { verifyToken } from '../../../utils/Validation.ts'
 
@@ -10,7 +10,7 @@ interface Query {
         $options: 'i'
     }
 }
-const A = async (_: null, args: { search: string, page: number }, context: { req: Request }) => {
+const Collection = async (_: null, args: { search: string, page: number }, context: { req: Request }) => {
     const t = context.req.cookies['!']
     try {
         const { id } = verifyToken(t)
@@ -19,12 +19,11 @@ const A = async (_: null, args: { search: string, page: number }, context: { req
         const query: Query = { user_id: id }
         if (search) query.title = { $regex: search, $options: 'i' }
         const [bookCollection, totalCollection] = await Promise.all([
-            Collection.find(query)
-                .select('author_key cover_edition_key cover_i title author_name')
+            Col.find(query)
                 .sort({ created: -1 })
                 .skip((page - 1) * limit)
                 .limit(limit),
-            Collection.countDocuments(query)
+                Col.countDocuments(query)
         ])
         return {
             found: bookCollection.length,
@@ -41,4 +40,4 @@ const A = async (_: null, args: { search: string, page: number }, context: { req
         throw e
     }
 }
-export default A
+export default Collection
